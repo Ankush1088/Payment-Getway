@@ -8,7 +8,7 @@ export default defineConfig({
   server:{
     proxy:{
      "/api":{
-        target:"http://localhost:20000",// Backend ka correct URL likho
+        target: "https://payment-getway-2o97.onrender.com", // Updated backend URL
         changeOrigin:true,
         secure:false
       }
