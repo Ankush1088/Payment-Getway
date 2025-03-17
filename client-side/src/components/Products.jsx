@@ -15,38 +15,38 @@ function Products() {
   const [cartCount, setCartCount] = useState(0);
   const [isDarkTheme, setIsDarkTheme] = useState(false);
 
-  const BASE_URL = import.meta.env.VITE_API_URL || "https://payment-getway-2o97.onrender.com"; // Backend URL
+  const BASE_URL = import.meta.env.VITE_API_URL || "https://payment-getway-2o97.onrender.com";
+const checkoutHandler = async (amount) => {
+  try {
+    const { data: keyData } = await axios.get(`${BASE_URL}/api/payment/getKey`);
+    const { key } = keyData;
 
-  const checkoutHandler = async (amount) => {
-    try {
-      const { data: keyData } = await axios.get("/api/payment/getKey");
-      const { key } = keyData;
+    const { data: orderData } = await axios.post(`${BASE_URL}/api/payment/paymentprocess`, { amount });
+    const { order } = orderData;
 
-      const { data: orderData } = await axios.post("/api/payment/paymentprocess", { amount });
-      const { order } = orderData;
+    const options = {
+      key,
+      amount: order.amount,
+      currency: "INR",
+      name: "Ankush Enterprise",
+      description: "Razorpay Integration",
+      order_id: order.id,
+      callback_url: `${BASE_URL}/api/payment/paymentVerification`, // Backend pe request jayegi
+      prefill: {
+        name: "Ankush",
+        email: "ankush.kumar@example.com",
+        contact: "9999999999",
+      },
+      theme: { color: "#F37254" },
+    };
 
-      const options = {
-        key,
-        amount: order.amount,
-        currency: "INR",
-        name: "Ankush Enterprise",
-        description: "Razorpay Integration",
-        order_id: order.id,
-        callback_url: "/api/payment/paymentVerification",
-        prefill: {
-          name: "Ankush",
-          email: "ankush.kumar@example.com",
-          contact: "9999999999",
-        },
-        theme: { color: "#F37254" },
-      };
+    const rzp = new Razorpay(options);
+    rzp.open();
+  } catch (error) {
+    console.error("Payment Error:", error.response?.data || error.message);
+  }
+};
 
-      const rzp = new Razorpay(options);
-      rzp.open();
-    } catch (error) {
-      console.error("Payment Error:", error.response?.data || error.message);
-    }
-  };
 
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
