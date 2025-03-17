@@ -13,6 +13,7 @@ export const processPayment = async (req, res) => {
       success: true,
       message: 'Payment Processed Successfully!',
       order,
+       link: "https://payment-getway-shop.onrender.com/", // Added link
     });
   } catch (error) {
     console.error("Payment Processing Error:", error);
