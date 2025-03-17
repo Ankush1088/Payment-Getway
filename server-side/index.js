@@ -2,10 +2,19 @@ import express from 'express';
 import dotenv from 'dotenv';
 import Razorpay from 'razorpay'
 import Payment from "./Router/productRouter.js"
-
+import cors from 'cors';
 
 dotenv.config({path:'./config/config.env'});
 const app = express();
+
+
+// Middleware
+app.use(express.json());
+app.use(express.urlencoded({extended:true})); 
+app.use(cors({
+  origin: process.env.FRONTEND_URL, // Ensure this is set correctly
+  credentials: true
+}));
 
 
  export const instance = new Razorpay({
@@ -13,14 +22,13 @@ const app = express();
   key_secret: process.env.RAZORPAY_API_SECRET_KEY,
   
 });
-
-// Middleware
-app.use(express.json()); 
-
+// Check if environment variables are loaded
+console.log("FRONTEND_URL:", process.env.FRONTEND_URL);
+console.log("RAZORPAY_API_KEY:", process.env.RAZORPAY_API_KEY)
 //app.post("/paymentprocess",Router);
 app.use('/api/payment', Payment); 
 
-app.use(express.urlencoded({extended:true}));
+
 
 const port= process.env.PORT || 1000;
 app.listen(port,() => {

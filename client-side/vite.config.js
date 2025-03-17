@@ -3,11 +3,11 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: "./",
+
   plugins: [react()],
   server:{
     proxy:{
-      '/api':{
+     "/api":{
         target:"http://localhost:20000",// Backend ka correct URL likho
         changeOrigin:true,
         secure:false
