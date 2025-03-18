@@ -27,6 +27,8 @@ export const getKey = async (req, res) => {
 };
 
 export const paymentVerification = async (req, res) => {
+   console.log("Payment Verification Triggered");
+  console.log("Received Body:", req.body);
   const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = req.body;
   const body = razorpay_order_id + "|" + razorpay_payment_id;
 
