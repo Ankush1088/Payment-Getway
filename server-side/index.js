@@ -12,7 +12,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended:true})); 
 app.use(cors({
-  origin: process.env.FRONTEND_URL || "https://payment-getway-client-side-git-main-ankushs-projects-c19977a6.vercel.app"// Ensure this is set correctly
+  origin: "https://payment-getway-client-side-evkvf3rnk-ankushs-projects-c19977a6.vercel.app", 
+    methods: "GET,POST,PUT,DELETE",
   credentials: true
 }));
 
