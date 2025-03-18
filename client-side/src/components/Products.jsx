@@ -5,31 +5,20 @@ const products = [
   { id: 1, name: "Product 1", price: 10, image: "/box1_image.jpg" },
   { id: 2, name: "Product 2", price: 20, image: "/box2_image.jpg" },
   { id: 3, name: "Product 3", price: 30, image: "/box3_image.jpg" },
+  { id: 4, name: "Product 4", price: 40, image: "/box4_image.jpg" },
+  { id: 5, name: "Product 5", price: 50, image: "/box5_image.jpg" },
+  { id: 6, name: "Product 6", price: 60, image: "/box6_image.jpg" },
 ];
-
-const BASE_URL = import.meta.env.VITE_API_URL?.replace(/\/$/, '') || "https://payment-getway-api.vercel.app";
 
 function Products() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [cartCount, setCartCount] = useState(0);
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
 
-  const loadRazorpay = async () => {
-    return new Promise((resolve) => {
-      const script = document.createElement("script");
-      script.src = "https://checkout.razorpay.com/v1/checkout.js";
-      script.onload = () => resolve(true);
-      script.onerror = () => resolve(false);
-      document.body.appendChild(script);
-    });
-  };
+  const BASE_URL = import.meta.env.VITE_API_URL;
 
   const checkoutHandler = async (amount) => {
     try {
-      const razorpayLoaded = await loadRazorpay();
-      if (!razorpayLoaded) {
-        alert("Failed to load Razorpay. Check network connection.");
-        return;
-      }
-
       const { data: keyData } = await axios.get(`${BASE_URL}/api/payment/getKey`);
       const { key } = keyData;
 
@@ -59,33 +48,24 @@ function Products() {
     }
   };
 
+  // ... (बाकी का कोड)
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
-    <div className="min-h-screen bg-gray-100 text-black">
-      <header className="p-4 flex justify-between items-center bg-gray-200">
-        <h1 className="text-2xl font-bold">My Shopping Website</h1>
-        <input
-          type="text"
-          placeholder="Search products..."
-          className="p-2 rounded border"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </header>
-
+    <div className={`min-h-screen ${isDarkTheme ? "bg-gray-900 text-white" : "bg-gray-100 text-black"}`}>
+      {/* ... (बाकी का कोड) */}
       <main className="p-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {filteredProducts.map((product) => (
-            <div key={product.id} className="rounded-lg shadow-md p-4 text-center bg-white">
+            <div key={product.id} className={`rounded-lg shadow-md p-4 text-center ${isDarkTheme ? "bg-gray-800" : "bg-white"} flex flex-col items-center w-full h-full`}>
               <img src={product.image} alt={product.name} className="w-64 h-64 object-cover rounded-md" />
-              <h2 className="text-lg font-semibold mt-2">{product.name}</h2>
-              <p className="text-gray-600">${product.price}</p>
+              <h2 className="text-lg font-semibold mt-2 w-full">{product.name}</h2>
+              <p className="text-gray-600 w-full">${product.price}</p>
               <button
                 onClick={() => checkoutHandler(product.price)}
-                className="mt-4 bg-green-500 text-white py-2 px-4 rounded"
+                className="mt-4 bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition w-full"
               >
                 Buy Now
               </button>
@@ -93,6 +73,8 @@ function Products() {
           ))}
         </div>
       </main>
+
+      {/* ... (बाकी का कोड) */}
     </div>
   );
 }
