@@ -12,7 +12,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended:true})); 
 app.use(cors({
-  origin: process.env.FRONTEND_URL, // Allow frontend origin
+  origin: ["https://payment-getway-client-side.vercel.app", "http://localhost:3000"], // Allow local testing
     methods: "GET,POST,PUT,DELETE",
   credentials: true
 }));
