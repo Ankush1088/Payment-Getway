@@ -36,7 +36,8 @@ export const paymentVerification = async (req, res) => {
   console.log("Verification Status:", expectedSignature === razorpay_signature);
 
   if (expectedSignature === razorpay_signature) {
-    res.json({ success: true, message: "Payment Verified", reference: razorpay_payment_id });
+    return res.redirect(`<span class="math-inline">\{process\.env\.FRONTEND\_URL\}/PaymentsSuccess?reference\=</span>{razorpay_payment_id}`);
+   // res.json({ success: true, message: "Payment Verified", reference: razorpay_payment_id });
   } else {
     res.status(400).json({ success: false, message: "Invalid Signature" });
   }
