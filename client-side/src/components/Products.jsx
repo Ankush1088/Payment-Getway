@@ -35,7 +35,7 @@ const checkoutHandler = async (amount) => {
       name: "Ankush Enterprise",
       description: "Razorpay Integration",
       order_id: order.id,
-      callback_url: `${BASE_URL}/api/payment/paymentVerification`, // Backend pe request jayegi
+callback_url: `${BASE_URL.replace(/\/$/, '')}/api/payment/paymentVerification`,
       prefill: {
         name: "Ankush",
         email: "ankush.kumar@example.com",
