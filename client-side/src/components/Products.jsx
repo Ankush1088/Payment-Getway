@@ -19,11 +19,14 @@ function Products() {
     const BASE_URL = import.meta.env.VITE_API_URL ||  "https://payment-getway-api.vercel.app/"
 const checkoutHandler = async (amount) => {
   try {
+        console.log("Checking API Key Fetch...");
     const { data: keyData } = await axios.get(`${BASE_URL}/api/payment/getKey`);
     const { key } = keyData;
-
+    console.log("Received Key Data:", keyData); // Debugging API key fetch
+   console.log("Creating Order...");
     const { data: orderData } = await axios.post(`${BASE_URL}/api/payment/paymentprocess`, { amount });
     const { order } = orderData;
+    console.log("Received Order Data:", orderData);
 
     const options = {
       key,
@@ -40,6 +43,7 @@ const checkoutHandler = async (amount) => {
       },
       theme: { color: "#F37254" },
     };
+    console.log("Initializing Razorpay...");
 
     const rzp = new Razorpay(options);
     rzp.open();
