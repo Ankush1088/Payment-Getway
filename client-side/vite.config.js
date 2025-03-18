@@ -8,7 +8,7 @@ export default defineConfig({
   server:{
     proxy:{
      "/api":{
-        target: "https://payment-getway-2o97.onrender.com", // Updated backend URL
+        target: "https://payment-getway-api.vercel.app/", // Updated backend URL
         changeOrigin:true,
         secure:false
       }
