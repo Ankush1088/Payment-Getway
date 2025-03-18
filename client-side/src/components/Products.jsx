@@ -16,7 +16,9 @@ function Products() {
   const [isDarkTheme, setIsDarkTheme] = useState(false);
 
  // const BASE_URL = import.meta.env.VITE_API_URL || "https://payment-getway-2o97.onrender.com";
-    const BASE_URL = import.meta.env.VITE_API_URL ||  "https://payment-getway-api.vercel.app"
+  //  const BASE_URL = import.meta.env.VITE_API_URL ||  "https://payment-getway-api.vercel.app"
+  const BASE_URL = import.meta.env.VITE_API_URL?.replace(/\/$/, '') || "https://payment-getway-api.vercel.app";
+
 const checkoutHandler = async (amount) => {
   try {
         console.log("Checking API Key Fetch...");
