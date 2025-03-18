@@ -9,7 +9,11 @@ export const processPayment = async (req, res) => {
     };
 
     const order = await instance.orders.create(options);
-    res.status(200).json({ success: true, message: "Payment Processed Successfully!", order });
+    res.status(200).json({
+      success: true,
+      message: 'Payment Processed Successfully!',
+      order,
+    });
   } catch (error) {
     console.error("Payment Processing Error:", error);
     res.status(500).json({ success: false, message: "Payment Processing Failed" });
@@ -17,8 +21,9 @@ export const processPayment = async (req, res) => {
 };
 
 export const getKey = async (req, res) => {
-  res.status(200).json({ key: process.env.RAZORPAY_API_KEY });
-};
+  res.status(200).json({
+    key: process.env.RAZORPAY_API_KEY,
+  });
 
 export const paymentVerification = async (req, res) => {
   console.log("Payment Verification Triggered");
