@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import Razorpay from 'razorpay'
 import Payment from "./Router/productRouter.js"
 import cors from 'cors';
-import { instance } from "./index.js";
+
 
 dotenv.config({path:'./config/config.env'});
 const app = express();
